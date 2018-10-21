@@ -20,4 +20,8 @@ defmodule Mixduty.Users do
     }
     post("users", client, body)
   end
+
+  def remove(id, client) do
+    delete("users/#{id}", client)
+  end
 end
