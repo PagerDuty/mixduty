@@ -4,10 +4,11 @@ defmodule Mixduty.Client do
 
   def new(auth) do
     %Client{
-      headers: %{
-        accept: "application/vnd.pagerduty+json;version=2",
-        authorization: "Token token=#{auth}"
-      }
+      headers: [
+        {"Accept", "application/vnd.pagerduty+json;version=2"},
+        {"Authorization", "Token token=#{auth}"},
+        {"Content-type", "application/json"}
+      ]
     }
   end
 end

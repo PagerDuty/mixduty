@@ -12,6 +12,11 @@ defmodule Mixduty do
     raw_request(:get, url, client, options)
   end
 
+  def post(path, client, body) do
+    url = @endpoint <> path
+    raw_request(:post, url, client, JSON.encode!(body))
+  end
+
   def raw_request(method, url, client \\ %{}, body \\ "", options \\ [])
   def raw_request(method, url, %Client{headers: headers}, body, options) do
     request!(method, url, body, headers, options)
@@ -22,18 +27,18 @@ defmodule Mixduty do
     {:error, "Client is incorrectly configured, initialize client with correct auth token"}
   end
 
-  def handle_response(%HTTPoison.Response{status_code: 200, body: resp_body}) do
+  def handle_response(%HTTPoison.Response{status_code: code, body: resp_body}) when code in 200..299 do
     JSON.Parser.parse(resp_body)
-    |> parse_json
+    |> parse_json(code)
   end
 
-  def handle_response(%HTTPoison.Response{headers: resp_headers}) do
-    {:error, resp_headers}
+  def handle_response(err) do
+    {:error, err}
   end
 
-  def parse_json({:ok, parsed_response}) do
+  def parse_json({:ok, parsed_response}, code) do
     %{
-      status: 200,
+      status: code,
       data: parsed_response
     }
   end
