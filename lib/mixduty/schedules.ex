@@ -13,13 +13,12 @@ defmodule Mixduty.Schedules do
 
   Schedules are used by escalation policies as an escalation target for a given escalation rule.
 
-
   """
 
   @doc """
   List schedules
   #### Example
-      Mixduty.ExtensionPolicies.list(client)
+      Mixduty.Schedules.list(client)
   """
   def list(client, params \\ [], options \\ []) do
     get("#{@path}", client, params, options)
