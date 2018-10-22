@@ -1,11 +1,12 @@
 # Mixduty
 
-**TODO: Add description**
+A simple elixir client for the PagerDuty v2 API.
+
+[Full Documentation](https://hexdocs.pm/mixduty/api-reference.html)
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mixduty` to your list of dependencies in `mix.exs`:
+Install by adding `mixduty` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +16,26 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/mixduty](https://hexdocs.pm/mixduty).
+```
+$ mix deps.get
+```
+
+## Example Usage
+
+Initialize a new client with a valid auth token:
+```
+$ iex -S mix
+iex(1)> client = Mixduty.Client.new("MY_TOKEN")
+%Mixduty.Client{
+  headers: [
+    {"Accept", "application/vnd.pagerduty+json;version=2"},
+    {"Authorization", "Token token=y_NbAkKc66ryYTWUXYEu"},
+    {"Content-type", "application/json"}
+  ]
+}
+```
+Pass client to function calls described in documentation:
+```
+iex(2)> Mixduty.Users.list(client)
+```
 
