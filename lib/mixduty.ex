@@ -22,6 +22,11 @@ defmodule Mixduty do
     raw_request(:delete, url, client, JSON.encode!(body))
   end
 
+  def put(path, client, body \\ "") do
+    url = @endpoint <> path
+    raw_request(:put, url, client, JSON.encode!(body))
+  end
+
   def raw_request(method, url, client \\ %{}, body \\ "", options \\ [])
   def raw_request(method, url, %Client{headers: headers}, body, options) do
     request!(method, url, body, headers, options)
