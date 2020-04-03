@@ -39,4 +39,24 @@ defmodule Mixduty.Incidents do
     client = Map.put(client, :headers, client.headers ++ [{"From", from}])
     post("#{@path}", client, body)
   end
+
+  @doc """
+  Create an incident note
+  #### Example
+      Mixduty.Incident.create_note("This is a note describing details", "P00PBUG", "user@pagerduty.com", client)
+  """
+  def create_note(note, incident_id, from, client) do
+    body = %{
+      note: %{
+        content: note
+      }
+    }
+
+    client = Map.put(client, :headers, client.headers ++ [{"From", from}])
+
+    @path
+    |> Path.join(incident_id)
+    |> Path.join("notes")
+    |> post(client, body)
+  end
 end
