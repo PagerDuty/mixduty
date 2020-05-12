@@ -7,8 +7,8 @@ defmodule Mixduty do
   @endpoint "https://api.pagerduty.com/"
 
   def get(path, client, params \\ [], options \\ []) do
-    url = @endpoint <> path
-    # TODO: Encode params to url
+    url = @endpoint <> path <> "?" <> URI.encode_query(params)
+
     raw_request(:get, url, client, options)
   end
 
