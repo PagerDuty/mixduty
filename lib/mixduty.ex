@@ -40,7 +40,7 @@ defmodule Mixduty do
   def handle_response(%HTTPoison.Response{status_code: code, body: resp_body}) when code in 200..299 do
     case resp_body do
       "" -> {:ok, resp_body} |> parse_json(code)
-      _ -> JSON.Parser.parse(resp_body) |> parse_json(code)
+      _ -> JSON.decode(resp_body) |> parse_json(code)
     end
   end
 
@@ -55,7 +55,7 @@ defmodule Mixduty do
     }
   end
 
-  def parse_json(err, _) do
+  def parse_json({:error, err}, _) do
     {:error, "Could not parse response", err}
   end
 end
