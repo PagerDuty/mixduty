@@ -39,6 +39,14 @@ Pass client to function calls described in documentation:
 iex(2)> Mixduty.Users.list(client)
 ```
 
+## Configuration
+
+The following configuration options are available:
+```elixir
+config :mixduty,
+  base_url: "https://api.pagerduty.com/"
+```
+
 ## License
 [MIT](https://opensource.org/licenses/MIT)
 

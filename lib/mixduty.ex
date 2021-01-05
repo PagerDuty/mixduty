@@ -4,26 +4,24 @@ defmodule Mixduty do
   alias Mixduty.Client
   alias Poison, as: JSON
 
-  @endpoint "https://api.pagerduty.com/"
-
   def get(path, client, params \\ [], options \\ []) do
-    url = @endpoint <> path <> "?" <> URI.encode_query(params)
+    url = endpoint() <> path <> "?" <> URI.encode_query(params)
 
     raw_request(:get, url, client, options)
   end
 
   def post(path, client, body \\ "") do
-    url = @endpoint <> path
+    url = endpoint() <> path
     raw_request(:post, url, client, JSON.encode!(body))
   end
 
   def delete(path, client, body \\ "") do
-    url = @endpoint <> path
+    url = endpoint() <> path
     raw_request(:delete, url, client, JSON.encode!(body))
   end
 
   def put(path, client, body \\ "") do
-    url = @endpoint <> path
+    url = endpoint() <> path
     raw_request(:put, url, client, JSON.encode!(body))
   end
 
@@ -57,5 +55,9 @@ defmodule Mixduty do
 
   def parse_json({:error, err}, _) do
     {:error, "Could not parse response", err}
+  end
+
+  defp endpoint do
+    Application.get_env(:mixduty, :base_url, "https://api.pagerduty.com/")
   end
 end
