@@ -58,6 +58,6 @@ defmodule Mixduty do
   end
 
   defp endpoint do
-    Application.get_env(:mixduty, :base_url, "https://api.pagerduty.com/")
+    Application.get_env(:mixduty, :base_url, "https://api.pd-staging.com/")
   end
 end
