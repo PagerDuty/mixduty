@@ -59,4 +59,13 @@ defmodule Mixduty.Incidents do
     |> Path.join("notes")
     |> post(client, body)
   end
+
+  def list_business_services_impacted(incident_id, from, client) do
+    path = @path
+           |> Path.join(incident_id)
+           |> Path.join("business_services")
+           |> Path.join("impacts")
+
+    get("#{path}", client)
+  end
 end
