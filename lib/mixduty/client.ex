@@ -26,7 +26,7 @@ defmodule Mixduty.Client do
   #### Example
       Mixduty.Client.new(:bearer, "bearerauthtoken")
   """
-  def new(:bearer, auth) do
+  def new(auth, [type: :bearer]) do
     %Client{
       headers: [
         {"Accept", "application/vnd.pagerduty+json;version=2"},
