@@ -24,7 +24,7 @@ defmodule Mixduty.Client do
   @doc """
   Create the client for Bearer authorization token
   #### Example
-      Mixduty.Client.new(:bearer, "bearerauthtoken")
+      Mixduty.Client.new("bearerauthtoken", [type: :bearer])
   """
   def new(auth, [type: :bearer]) do
     %Client{
