@@ -59,4 +59,18 @@ defmodule Mixduty.Incidents do
     |> Path.join("notes")
     |> post(client, body)
   end
+
+  @doc """
+  Get list of notification subscriberst
+  #### Example
+      Mixduty.Incident.list_notification_subscribers("P00PBUG", client)
+
+  """
+  def list_notification_subscribers(incident_id, client) do
+    @path
+     |> Path.join(incident_id)
+     |> Path.join("status_updates")
+     |> Path.join("subscribers")
+     |> get(client)
+  end
 end
