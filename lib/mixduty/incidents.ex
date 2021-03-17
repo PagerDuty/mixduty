@@ -66,7 +66,7 @@ defmodule Mixduty.Incidents do
       Mixduty.Incident.list_notification_subscribers("P00PBUG", "user@pagerduty.com", client)
 
   """
-  def list_notification_subscribers(incident_id, from, client) do
+  def list_notification_subscribers(incident_id, client) do
     path = @path
            |> Path.join(incident_id)
            |> Path.join("status_updates")
