@@ -20,6 +20,7 @@ defmodule Mixduty.MixProject do
     An elixir client for PagerDuty's API v2
     """
   end
+
   defp package do
     [
       files: ["lib", "mix.exs", "README*", "LICENSE*"],

@@ -42,6 +42,7 @@ defmodule Mixduty.Users do
       name: name,
       email: email
     }
+
     post("#{@path}", client, body)
   end
 

@@ -27,14 +27,16 @@ defmodule Mixduty.Incidents do
       Mixduty.Incident.create("Server is on fire", "P00PBUG", "user@pagerduty.com", client)
   """
   def create(title, service_id, from, client, options \\ %{}) do
-    incident_body = %{
-      title: title,
-      service: %{
-        id: service_id,
-        type: "service_reference"
+    incident_body =
+      %{
+        title: title,
+        service: %{
+          id: service_id,
+          type: "service_reference"
+        }
       }
-    }
-    |> Map.merge(options)
+      |> Map.merge(options)
+
     body = %{incident: incident_body}
     client = Map.put(client, :headers, client.headers ++ [{"From", from}])
     post("#{@path}", client, body)

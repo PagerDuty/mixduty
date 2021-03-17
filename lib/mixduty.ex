@@ -26,6 +26,7 @@ defmodule Mixduty do
   end
 
   def raw_request(method, url, client \\ %{}, body \\ "", options \\ [])
+
   def raw_request(method, url, %Client{headers: headers}, body, options) do
     request!(method, url, body, headers, options)
     |> handle_response
@@ -35,7 +36,8 @@ defmodule Mixduty do
     {:error, "Client is incorrectly configured, initialize client with correct auth token"}
   end
 
-  def handle_response(%HTTPoison.Response{status_code: code, body: resp_body}) when code in 200..299 do
+  def handle_response(%HTTPoison.Response{status_code: code, body: resp_body})
+      when code in 200..299 do
     case resp_body do
       "" -> {:ok, resp_body} |> parse_json(code)
       _ -> JSON.decode(resp_body) |> parse_json(code)
