@@ -20,4 +20,19 @@ defmodule Mixduty.Client do
       ]
     }
   end
+
+  @doc """
+  Create the client for Bearer authorization token
+  #### Example
+      Mixduty.Client.new("bearerauthtoken", [type: :bearer])
+  """
+  def new(auth, [type: :bearer]) do
+    %Client{
+      headers: [
+        {"Accept", "application/vnd.pagerduty+json;version=2"},
+        {"Authorization", "Bearer #{auth}"},
+        {"Content-type", "application/json"}
+      ]
+    }
+  end
 end
