@@ -67,11 +67,10 @@ defmodule Mixduty.Incidents do
 
   """
   def list_notification_subscribers(incident_id, client) do
-    path = @path
-           |> Path.join(incident_id)
-           |> Path.join("status_updates")
-           |> Path.join("subscribers")
-
-    get("#{path}", client)
+    @path
+     |> Path.join(incident_id)
+     |> Path.join("status_updates")
+     |> Path.join("subscribers")
+     |> get(client)
   end
 end
