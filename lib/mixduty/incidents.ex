@@ -60,24 +60,6 @@ defmodule Mixduty.Incidents do
     |> post(client, body)
   end
 
-
-  @doc """
-  Get list of business services impacted by the incident
-  #### Early Access
-      This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS=business-impact-early-access header into client to access it.
-  #### Example
-      Mixduty.Incident.list_business_services_impacted("P00PBUG", "user@pagerduty.com", client)
-
-  """
-  def list_business_services_impacted(incident_id, from, client) do
-    path = @path
-           |> Path.join(incident_id)
-           |> Path.join("business_services")
-           |> Path.join("impacts")
-
-    get("#{path}", client)
-  end
-
   @doc """
   Get list of notification subscriberst
   #### Example
