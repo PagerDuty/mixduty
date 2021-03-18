@@ -63,12 +63,12 @@ defmodule Mixduty.Incidents do
   end
 
   @doc """
-  Get list of notification subscriberst
+  Get list of notification subscribers
   #### Example
-      Mixduty.Incident.list_notification_subscribers("P00PBUG", client)
+      Mixduty.Incident.list_notification_subscribers(client, "P00PBUG")
 
   """
-  def list_notification_subscribers(incident_id, client) do
+  def list_notification_subscribers(client, incident_id) do
     @path
     |> Path.join(incident_id)
     |> Path.join("status_updates")
