@@ -64,9 +64,10 @@ defmodule Mixduty.Incidents do
 
   @doc """
   Get list of notification subscribers
-  #### Example
-      Mixduty.Incident.list_notification_subscribers(client, "P00PBUG")
-
+  #### Examples
+      - Mixduty.Incident.list_notification_subscribers(client, "P00PBUG")
+      - Mixduty.Client.new(token)
+        |> Mixduty.Incident.list_notification_subscribers("P00PBUG")
   """
   def list_notification_subscribers(client, incident_id) do
     @path
