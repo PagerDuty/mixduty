@@ -27,13 +27,7 @@ defmodule Mixduty.Client do
       Mixduty.Client.new("bearerauthtoken", [type: :bearer])
   """
   def new(auth, type: :bearer) do
-    %Client{
-      headers: [
-        {"Accept", "application/vnd.pagerduty+json;version=2"},
-        {"Authorization", "Bearer #{auth}"},
-        {"Content-type", "application/json"}
-      ]
-    }
+    new(auth, type: :bearer, headers: [])
   end
 
   @doc """
