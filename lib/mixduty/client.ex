@@ -35,4 +35,20 @@ defmodule Mixduty.Client do
       ]
     }
   end
+
+  @doc """
+  Internal use only
+  Create the client for Bearer authorization token with additional headers
+  #### Example
+      Mixduty.Client.new("bearerauthtoken", [type: :bearer, headers: [{"X-EARLY-ACCESS", "business-impact-early-access"}])
+  """
+  def new(auth, type: :bearer, headers: additional_headers) do
+    %Client{
+      headers: [
+        {"Accept", "application/vnd.pagerduty+json;version=2"},
+        {"Authorization", "Bearer #{auth}"},
+        {"Content-type", "application/json"}
+      ] ++ additional_headers
+    }
+  end
 end
