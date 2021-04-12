@@ -1,8 +1,7 @@
 defmodule Mixduty do
-  use HTTPoison.Base
   require Logger
   alias Mixduty.Client
-  alias Poison, as: JSON
+  alias Jason, as: JSON
 
   def get(path, client, params \\ [], options \\ []) do
     url = endpoint() <> path <> "?" <> URI.encode_query(params)
@@ -28,8 +27,8 @@ defmodule Mixduty do
   def raw_request(method, url, client \\ %{}, body \\ "", options \\ [])
 
   def raw_request(method, url, %Client{headers: headers}, body, options) do
-    request!(method, url, body, headers, options)
-    |> handle_response
+    HTTPoison.request(method, url, body, headers, options)
+    |> handle_response()
   end
 
   def raw_request(_method, _url, _client, _body, _options) do
