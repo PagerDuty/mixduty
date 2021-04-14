@@ -11,7 +11,7 @@ Install by adding `mixduty` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:mixduty, "~> 0.1.0"}
+    {:mixduty, "~> 0.1.1"}
   ]
 end
 ```
