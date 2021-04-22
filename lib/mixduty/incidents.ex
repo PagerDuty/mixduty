@@ -86,10 +86,34 @@ defmodule Mixduty.Incidents do
 
   """
   def list_business_services_impacted(client, incident_id) do
-      @path
-      |> Path.join(incident_id)
-      |> Path.join("business_services")
-      |> Path.join("impacts")
-      |> get(client)
+    @path
+    |> Path.join(incident_id)
+    |> Path.join("business_services")
+    |> Path.join("impacts")
+    |> get(client)
+  end
+
+  @doc """
+  Create an incident stakeholder status update
+  #### Examples
+      Mixdity.Incident.create_status_update(client, "P00PBUG", "This is status update")
+  """
+  @spec create_status_update(
+          client :: Mixduty.Client.t(),
+          incident_id :: Stringt.t(),
+          status_update :: String.t()
+        ) ::
+          %{required(:status_code) => integer(), required(:data) => map()}
+          | {:error, any()}
+          | {:error, String.t(), any()}
+  def create_status_update(client, incident_id, status_update) do
+    body = %{
+      message: status_update
+    }
+
+    @path
+    |> Path.join(incident_id)
+    |> Path.join("status_updates")
+    |> post(client, body)
   end
 end

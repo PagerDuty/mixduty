@@ -2,6 +2,8 @@ defmodule Mixduty.Client do
   alias __MODULE__
   defstruct headers: nil
 
+  @type t :: %__MODULE__{}
+
   @moduledoc """
   The client used to make requests to the PagerDuty v2 API
   """
@@ -38,11 +40,12 @@ defmodule Mixduty.Client do
   """
   def new(auth, type: :bearer, headers: additional_headers) do
     %Client{
-      headers: [
-        {"Accept", "application/vnd.pagerduty+json;version=2"},
-        {"Authorization", "Bearer #{auth}"},
-        {"Content-type", "application/json"}
-      ] ++ additional_headers
+      headers:
+        [
+          {"Accept", "application/vnd.pagerduty+json;version=2"},
+          {"Authorization", "Bearer #{auth}"},
+          {"Content-type", "application/json"}
+        ] ++ additional_headers
     }
   end
 end
