@@ -35,7 +35,7 @@ defmodule Mixduty do
     {:error, "Client is incorrectly configured, initialize client with correct auth token"}
   end
 
-  def handle_response(%HTTPoison.Response{status_code: code, body: resp_body})
+  def handle_response({:ok, %HTTPoison.Response{status_code: code, body: resp_body}})
       when code in 200..299 do
     case resp_body do
       "" -> {:ok, resp_body} |> parse_json(code)
@@ -43,8 +43,13 @@ defmodule Mixduty do
     end
   end
 
-  def handle_response(err) do
-    {:error, err}
+  def handle_response({:ok, %HTTPoison.Response{status_code: code, body: resp_body}})
+      when code in 400..599 do
+    {:error, resp_body}
+  end
+
+  def handle_response({:error, %HTTPoison.Error{reason: reason}}) do
+    {:error, reason}
   end
 
   def parse_json({:ok, parsed_response}, code) do

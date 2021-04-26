@@ -94,7 +94,7 @@ defmodule MixdutyTest do
     """
 
     test "parses a successful response" do
-      response = %HTTPoison.Response{status_code: 201, body: @success_json}
+      response = {:ok, %HTTPoison.Response{status_code: 201, body: @success_json}}
 
       assert %{
                status: 201,
@@ -103,26 +103,28 @@ defmodule MixdutyTest do
     end
 
     test "parses an empty response" do
-      response = %HTTPoison.Response{status_code: 201, body: ""}
+      response = {:ok, %HTTPoison.Response{status_code: 201, body: ""}}
 
       assert %{status: 201, data: ""} = Mixduty.handle_response(response)
     end
 
     test "errors on failure to parse JSON" do
-      response = %HTTPoison.Response{
-        status_code: 201,
-        body: """
-        {"Incomplete": "respon
-        """
-      }
+      response =
+        {:ok,
+         %HTTPoison.Response{
+           status_code: 201,
+           body: """
+           {"Incomplete": "respon
+           """
+         }}
 
       assert {:error, "Could not parse response", _} = Mixduty.handle_response(response)
     end
 
     test "passes through server errors" do
-      response = %HTTPoison.Response{status_code: 400, body: "Bad Request"}
+      response = {:ok, %HTTPoison.Response{status_code: 400, body: "Bad Request"}}
 
-      assert {:error, ^response} = Mixduty.handle_response(response)
+      assert {:error, "Bad Request"} = Mixduty.handle_response(response)
     end
   end
 end
