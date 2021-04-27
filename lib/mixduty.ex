@@ -2,6 +2,7 @@ defmodule Mixduty do
   require Logger
   alias Mixduty.Client
   alias Jason, as: JSON
+  alias Mixduty.Response
 
   def get(path, client, params \\ [], options \\ []) do
     url = endpoint() <> path <> "?" <> URI.encode_query(params)
@@ -28,39 +29,11 @@ defmodule Mixduty do
 
   def raw_request(method, url, %Client{headers: headers}, body, options) do
     HTTPoison.request(method, url, body, headers, options)
-    |> handle_response()
+    |> Response.new()
   end
 
   def raw_request(_method, _url, _client, _body, _options) do
     {:error, "Client is incorrectly configured, initialize client with correct auth token"}
-  end
-
-  def handle_response({:ok, %HTTPoison.Response{status_code: code, body: resp_body}})
-      when code in 200..299 do
-    case resp_body do
-      "" -> {:ok, resp_body} |> parse_json(code)
-      _ -> JSON.decode(resp_body) |> parse_json(code)
-    end
-  end
-
-  def handle_response({:ok, %HTTPoison.Response{status_code: code, body: resp_body}})
-      when code in 400..599 do
-    {:error, resp_body}
-  end
-
-  def handle_response({:error, %HTTPoison.Error{reason: reason}}) do
-    {:error, reason}
-  end
-
-  def parse_json({:ok, parsed_response}, code) do
-    %{
-      status: code,
-      data: parsed_response
-    }
-  end
-
-  def parse_json({:error, err}, _) do
-    {:error, "Could not parse response", err}
   end
 
   defp endpoint do
