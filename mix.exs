@@ -41,7 +41,8 @@ defmodule Mixduty.MixProject do
       {:httpoison, "~> 1.6"},
       {:jason, "~> 1.2.2"},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
-      {:plug_cowboy, "~> 1.0"}
+      {:plug_cowboy, "~> 1.0"},
+      {:morphix, "~> 0.8.0"}
     ]
   end
 end
