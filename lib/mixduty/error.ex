@@ -4,11 +4,13 @@ defmodule Mixduty.Error do
 
   defstruct [
     :message,
-    :cause
+    :cause,
+    :status_code
   ]
 
   @type t :: %__MODULE__{
           message: String.t(),
-          cause: HTTPoison.Response.t() | HTTPoison.Error.t() | String.t()
+          cause: HTTPoison.Response.t() | HTTPoison.Error.t() | String.t(),
+          status_code: integer()
         }
 end

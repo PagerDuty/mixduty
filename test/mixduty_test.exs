@@ -99,7 +99,7 @@ defmodule MixdutyTest do
       assert {:ok,
               %Mixduty.Response{
                 body: %{"incident" => %{"summary" => "[#1234] The server is on fire."}},
-                original_response: _
+                status_code: 201
               }} = Mixduty.Response.new(response)
     end
 
@@ -109,7 +109,7 @@ defmodule MixdutyTest do
       assert {:ok,
               %Mixduty.Response{
                 body: %{},
-                original_response: _
+                status_code: 201
               }} = Mixduty.Response.new(response)
     end
 
@@ -126,6 +126,7 @@ defmodule MixdutyTest do
       assert {:error,
               %Mixduty.Error{
                 message: "JSON parse error: unexpected byte at position 16: 0x72 ('r')",
+                status_code: 201,
                 cause: _
               }} = Mixduty.Response.new(response)
     end
@@ -133,7 +134,7 @@ defmodule MixdutyTest do
     test "passes through server errors" do
       response = {:ok, %HTTPoison.Response{status_code: 400, body: "Bad Request"}}
 
-      assert {:error, %Mixduty.Error{message: "Bad Request", cause: _}} =
+      assert {:error, %Mixduty.Error{message: "Bad Request", status_code: 400, cause: _}} =
                Mixduty.Response.new(response)
     end
   end
