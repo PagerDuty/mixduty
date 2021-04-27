@@ -96,16 +96,21 @@ defmodule MixdutyTest do
     test "parses a successful response" do
       response = {:ok, %HTTPoison.Response{status_code: 201, body: @success_json}}
 
-      assert %{
-               status: 201,
-               data: %{"incident" => %{"summary" => "[#1234] The server is on fire."}}
-             } = Mixduty.handle_response(response)
+      assert {:ok,
+              %Mixduty.Response{
+                body: %{"incident" => %{"summary" => "[#1234] The server is on fire."}},
+                original_response: _
+              }} = Mixduty.Response.new(response)
     end
 
     test "parses an empty response" do
       response = {:ok, %HTTPoison.Response{status_code: 201, body: ""}}
 
-      assert %{status: 201, data: ""} = Mixduty.handle_response(response)
+      assert {:ok,
+              %Mixduty.Response{
+                body: %{},
+                original_response: _
+              }} = Mixduty.Response.new(response)
     end
 
     test "errors on failure to parse JSON" do
@@ -118,13 +123,18 @@ defmodule MixdutyTest do
            """
          }}
 
-      assert {:error, "Could not parse response", _} = Mixduty.handle_response(response)
+      assert {:error,
+              %Mixduty.Error{
+                message: "JSON parse error: unexpected byte at position 16: 0x72 ('r')",
+                cause: _
+              }} = Mixduty.Response.new(response)
     end
 
     test "passes through server errors" do
       response = {:ok, %HTTPoison.Response{status_code: 400, body: "Bad Request"}}
 
-      assert {:error, "Bad Request"} = Mixduty.handle_response(response)
+      assert {:error, %Mixduty.Error{message: "Bad Request", cause: _}} =
+               Mixduty.Response.new(response)
     end
   end
 end

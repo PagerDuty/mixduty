@@ -4,7 +4,7 @@ defmodule Mixduty.MixProject do
   def project do
     [
       app: :mixduty,
-      version: "0.1.1",
+      version: "1.0.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -40,7 +40,8 @@ defmodule Mixduty.MixProject do
     [
       {:httpoison, "~> 1.6"},
       {:jason, "~> 1.2.2"},
-      {:ex_doc, "~> 0.24", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
+      {:plug_cowboy, "~> 1.0"}
     ]
   end
 end
