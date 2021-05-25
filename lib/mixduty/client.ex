@@ -14,12 +14,22 @@ defmodule Mixduty.Client do
       Mixduty.Client.new("myauthtoken")
   """
   def new(auth) do
+    new(auth, headers: [])
+  end
+
+  @doc """
+  Create the client with additional headers
+  #### Example
+      Mixduty.Client.new("myauthtoken", [headers: [{"X-EARLY-ACCESS", "business-impact-early-access"}])
+  """
+  def new(auth, headers: additional_headers) do
     %Client{
-      headers: [
-        {"Accept", "application/vnd.pagerduty+json;version=2"},
-        {"Authorization", "Token token=#{auth}"},
-        {"Content-type", "application/json"}
-      ]
+      headers:
+        [
+          {"Accept", "application/vnd.pagerduty+json;version=2"},
+          {"Authorization", "Token token=#{auth}"},
+          {"Content-type", "application/json"}
+        ] ++ additional_headers
     }
   end
 
