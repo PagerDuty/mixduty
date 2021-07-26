@@ -1,3 +1,9 @@
+# Deprecation Notice
+
+This package is no longer maintained and we do not recommend using it.
+
+----
+
 # Mixduty
 
 A simple elixir client for the PagerDuty v2 API.
