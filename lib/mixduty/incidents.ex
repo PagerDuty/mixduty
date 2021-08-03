@@ -24,7 +24,7 @@ defmodule Mixduty.Incidents do
   @doc """
   Create an incident
   #### Example
-      Mixduty.Incident.create("Server is on fire", "P00PBUG", "user@pagerduty.com", client)
+      Mixduty.Incidents.create("Server is on fire", "P00PBUG", "user@pagerduty.com", client)
   """
   def create(title, service_id, from, client, options \\ %{}) do
     incident_body =
@@ -43,9 +43,30 @@ defmodule Mixduty.Incidents do
   end
 
   @doc """
+  Get an incident
+  #### Example
+      Mixduty.Incidents.incident("P00PBUG", client)
+  """
+  def incident(id, client, params \\ [], options \\ []) do
+    get("#{@path}/#{id}", client, params, options)
+  end
+
+  @doc """
+  List log entries of an incident
+  #### Example
+      Mixduty.Incidents.log_entries("P00PBUG", client)
+  """
+  def log_entries(incident_id, client, params \\ [], options \\ []) do
+    @path
+    |> Path.join(incident_id)
+    |> Path.join("log_entries")
+    |> get(client, params, options)
+  end
+
+  @doc """
   Create an incident note
   #### Example
-      Mixduty.Incident.create_note("This is a note describing details", "P00PBUG", "user@pagerduty.com", client)
+      Mixduty.Incidents.create_note("This is a note describing details", "P00PBUG", "user@pagerduty.com", client)
   """
   def create_note(note, incident_id, from, client) do
     body = %{
